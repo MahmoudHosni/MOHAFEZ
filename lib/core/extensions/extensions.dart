@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:mohafez/core/theme/dark_mode/themes/custom_themedata_ext.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../utils/Constants.dart';
@@ -37,6 +38,26 @@ extension SP on double {
     }
   }
 
+  toDimansionValue(BuildContext context) {
+    if (context.getDeviceType() == DeviceType.Phone) {
+      return this;
+    } else if(context.isAndroid && context.getDeviceType() == DeviceType.Tablet){
+       return this + 18.0;
+    } else if (context.isIOS && context.getDeviceType() == DeviceType.Tablet) {
+      return this + 20.0;
+    }
+  }
+
+  toDimansionValueLandscape(BuildContext context) {
+    if (context.getDeviceType() == DeviceType.Phone) {
+      return this;
+    } else if(context.isAndroid && context.getDeviceType() == DeviceType.Tablet){
+        return this + 14.0;
+    } else if (context.isIOS && context.getDeviceType() == DeviceType.Tablet) {
+      return this + 14.0;
+    }
+  }
+
   toSmallValue(BuildContext context) {
     if (context.getDeviceType() == DeviceType.Phone) {
       return this;
@@ -61,28 +82,13 @@ extension BuildContextExtension on BuildContext {
     return null;
   }
 
-  DeviceType getDeviceTabletType(bool isPortrait) {
-    var hasCutout = this.mediaQuery.hasCutout == null;
+  bool isNightMode() {
+    return ThemeCubit.get(this).isDark;
+  }
 
+  DeviceType getDeviceTabletType(bool isPortrait) {
     if(isAndroid && getDeviceType() == DeviceType.Tablet){
-      if(hasCutout){
-        // print("hasCutout >>>>  ${mediaQuery.size.width}");
-        if(isPortrait){
-          if (mediaQuery.size.width >=650 && mediaQuery.size.width < 750) {
-            return DeviceType.Fold;
-          } else {
-            return DeviceType.Tablet;
-          }
-        }else {
-          if (mediaQuery.size.width < 900) {
-            return DeviceType.Fold;
-          } else {
-            return DeviceType.Tablet;
-          }
-        }
-      }else{
         return DeviceType.Tablet;
-      }
     } else if (isIOS && getDeviceType() == DeviceType.Tablet) {
       return DeviceType.Tablet;
     }else{
@@ -127,10 +133,6 @@ extension BuildContextExtension on BuildContext {
 
   void changeDoublePages(bool value){
     DataPreference.getPreference()?.setBool(Constants.DoublePages,value);
-  }
-
-  bool isNightMode() {
-    return ThemeCubit.get(this).isDark;
   }
 }
 

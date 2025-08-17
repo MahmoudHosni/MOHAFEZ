@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:great_quran/core/entity/aya_position/AyaNumPosition.dart';
-import 'package:great_quran/core/extensions/extensions.dart';
-import 'package:great_quran/features/quran_show/presentation/widgets/AyaNumberWidget.dart';
-import '../../../../core/utils/Constants.dart';
+import 'package:mohafez/core/extensions/extensions.dart';
+import '../../../../core/entity/aya_position/AyaNumPosition.dart';
+import '../../../../utils/Constants.dart';
+import 'AyaNumberWidget.dart';
 
 class DynamicAyaNum extends StatelessWidget {
   final Orientation orientation;
@@ -46,17 +46,13 @@ class DynamicAyaNum extends StatelessWidget {
 
   double _calculateLeftPosition(BuildContext context) {
     final basePosition = ((ayaPosition.X?.toDouble() ?? 0) / scale) / scaleRatio;
-    final pageAdjustment = _isEarlyPage() 
-        ? Constants.leftPosAdjustment.toLeftPos2Value(context, orientation)
-        : 0.0;
-    
-    return basePosition + pageAdjustment;
+    return basePosition ;
   }
 
   Widget _buildPortraitAyaNumber(BuildContext context, double leftPos) {
     return Positioned(
       top: _calculateTopPosition() + Constants.portraitTopOffset,
-      left: leftPos + Constants.leftValueAdjustment.toValue3(context),
+      left: leftPos + Constants.leftValueAdjustment.toValue(context),
       child: _buildAyaContainer(
         context: context,
         width: _getPortraitWidth(context),
@@ -68,7 +64,7 @@ class DynamicAyaNum extends StatelessWidget {
   Widget _buildLandscapeAyaNumber(BuildContext context, double leftPos) {
     return Positioned(
       top: _calculateTopPosition() + Constants.landscapeTopOffset,
-      left: leftPos + Constants.leftValueAdjustment.toValue3Landscape(context),
+      left: leftPos + Constants.leftValueAdjustment.toValue(context),
       child: _buildAyaContainer(
         context: context,
         width: _getLandscapeWidth(context),

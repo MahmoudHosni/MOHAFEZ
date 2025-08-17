@@ -22,14 +22,8 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
   // Constants
   static const int _totalPagesPhone = 604;
   static const int _totalPagesTabletLandscape = 302;
-  static const double _khatmaWidgetWidth = 620.0;
-  static const Duration _dragMessageDelay = Duration(seconds: 1);
-  static const EdgeInsets _notchMargin = EdgeInsets.fromLTRB(0, 30, 0, 0);
-  static const EdgeInsets _khatmaWidgetPadding = EdgeInsets.fromLTRB(20.0, 40, 20, 0);
-
   late QuranPageCubit quranPageCubit;
   late PageController pageController;
-
 
   @override
   void initState() {

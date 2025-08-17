@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:great_quran/core/entity/aya_rect/ExportLine.dart';
+import '../../../../core/entity/aya_rect/ExportLine.dart';
 import '../../../../features/quran_show/domain/use_case/GetRectsFromTouchEvent.dart';
 import '../../../player/presentation/cubit/HighlightStatus.dart';
 import '../../../player/presentation/cubit/PlayerHighlightStatus.dart';

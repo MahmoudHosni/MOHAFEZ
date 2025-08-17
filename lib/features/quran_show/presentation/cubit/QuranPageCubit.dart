@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/entity/aya_position/AyaNumPosition.dart';
 import '../../../../core/entity/quran/Quran.dart';
 import '../../../../core/entity/quran/QuranPagesInfo.dart';
+import '../../../fahres/domain/use_cases/GetFirstAyaInPageUsecase.dart';
 import '../../domain/use_case/GetAyatPositionsInPage.dart';
 import '../../../../features/quran_show/domain/use_case/GetAyatPositionsInRange.dart';
 import '../../../../features/quran_show/presentation/cubit/QuranState.dart';
@@ -69,4 +70,3 @@ class QuranPageCubit extends Cubit<QuranState>{
     return getFirstAyaInPageUsecase.call(page);
   }
 }
-

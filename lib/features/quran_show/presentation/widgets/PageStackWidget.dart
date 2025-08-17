@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mohafez/core/extensions/extensions.dart';
 import '../../../../core/entity/aya_position/AyaNumPosition.dart';
 import '../../../../core/entity/aya_rect/ExportLine.dart';
+import '../../../../core/entity/quran/CellData.dart';
 import '../../../../core/entity/quran/Quran.dart';
 import '../../../../core/entity/quran/QuranPagesInfo.dart';
+import '../../../../core/theme/dark_mode/cubit/theme_cubit.dart';
 import '../../../../utils/Constants.dart';
+import '../../../player/presentation/cubit/PlayerCubit.dart';
 import '../../domain/quran_util/QuranUtils.dart';
 import '../cubit/AyatHighlightCubit.dart';
 import '../cubit/QuranPageCubit.dart';
@@ -83,16 +87,6 @@ class _PageStackWidgetState extends State<PageStackWidget> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.max,
             children: [
-              getEmptyLine(),
-              InkWell(
-                child: PageHeaderView(
-                  orientation: widget.orientation,
-                  pageInfo: pageInfo,
-                  soraIndex: _soraIndex,
-                ),
-                onTap: () => context.openFahres(openQuranView),
-              ),
-              getEmptyLine(),
               ...List.generate(_linesCount, (index) {
                 final lineNumber = index + 1;
                 return Flexible(
@@ -101,13 +95,6 @@ class _PageStackWidgetState extends State<PageStackWidget> {
                   child: getQuranPage(widget.pageNo, lineNumber, lineHeight),
                 );
               }),
-              getEmptyLine(),
-              PageNumberView(
-                pageNo: pageInfo?.PageNum ?? 0,
-                orientation: widget.orientation,
-                callBack: goToPage,
-              ),
-              getEmptyLine(),
             ],
           );
         });
@@ -123,7 +110,7 @@ class _PageStackWidgetState extends State<PageStackWidget> {
     return GestureDetector(
       onVerticalDragUpdate: isPortrait ? _handleVerticalDrag : null,
       onLongPressStart: (pos) => _handleLongPress(pos, line),
-      onTapUp: (_) => context.read<NavMainCubit>().hideORShowNavigator(willShow: true),
+      onTapUp: (_) => {},
       child: FittedBox(
         fit: BoxFit.cover,
         alignment: Alignment.center,
@@ -248,7 +235,7 @@ class _PageStackWidgetState extends State<PageStackWidget> {
     );
     
     if (openPlayer && firstLine.AyaNum > 0) {
-      context.openAyaDetails(firstLine.AyaNum, firstLine.SoraID, true);
+
     } else {
       _handlePageNavigation(firstLine);
     }
@@ -280,28 +267,6 @@ class _PageStackWidgetState extends State<PageStackWidget> {
     if (value == null) return;
     pageInfo = value;
     updateIfMounted();
-  }
-
-  void openPageOption(BuildContext context) {
-    showMaterialModalBottomSheet(
-      backgroundColor: Theme.of(context).cardBG,
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.zero,
-            topRight: Radius.zero,
-            bottomLeft: Radius.zero,
-            bottomRight: Radius.zero),
-      ),
-      builder: (context) => QuranPageServices(
-        page: widget.pageNo,
-        callable: () {
-          Navigator.of(context).pop();
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => MainView()));
-        },
-      ),
-    );
   }
 
   void updateIfMounted() {
