@@ -22,6 +22,8 @@ class Constants{
   static const String Locale = "Locale";
   static const String DoublePages = "DoublePages";
   static const String DownloadSowarFolderName = "";
+  static const String Star = "assets/images/star.png";
+  static const String EmptyStar = "assets/images/empty_star.png";
   // Constants for better maintainability
   static const double aspectRatioOffset = 0.1;
   static const double portraitTopOffset = -5.0;

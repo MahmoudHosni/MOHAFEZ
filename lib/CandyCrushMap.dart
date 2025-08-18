@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mohafez/utils/Constants.dart';
 
-class CandyCrushMap extends StatelessWidget {
+class CandyCrushMap extends StatefulWidget {
   const CandyCrushMap({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _CandyCrushMapState();
+}
+
+class _CandyCrushMapState extends State<CandyCrushMap> {
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +32,7 @@ class CandyCrushMap extends StatelessWidget {
 
               // Levels positioned on the path
               Positioned(
-                top: 4000,
+                top: 3800,
                 left: 200,
                 child: LevelNode(title: "البقرة", stars: 2, completed: true),
               ),
@@ -68,41 +78,33 @@ class LevelNode extends StatelessWidget {
       onTap: () {
         print("Tapped $title");
       },
-      child: Column(
-        children: [
+      child:
           Stack(
             alignment: Alignment.center,
             children: [
-              CircleAvatar(
-                radius: 35,
-                backgroundColor: Colors.purpleAccent,
+              Image.asset("assets/images/crt.png",width: 150,height: 200 ,),
+              Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 80),child: CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.transparent,
                 child: Text(
                   title,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(color: completed? Colors.yellow : Colors.white, fontSize: 33.0,fontWeight: FontWeight.bold,fontFamily: "Farah"),
                   textAlign: TextAlign.center,
                 ),
-              ),
-              if (completed)
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Icon(Icons.check_circle, color: Colors.cyan, size: 20),
+              ),),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(3, (index) {
+                    return Image.asset( index < stars ? Constants.Star : Constants.EmptyStar,fit: BoxFit.cover,
+                      width: 19,
+                    );
+                  }),
                 ),
+              ),
             ],
           ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: List.generate(3, (index) {
-              return Icon(
-                index < stars ? Icons.star : Icons.star_border,
-                color: index < stars ? Colors.yellow : Colors.white,
-                size: 16,
-              );
-            }),
-          ),
-        ],
-      ),
     );
   }
 }

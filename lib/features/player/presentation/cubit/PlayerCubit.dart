@@ -103,19 +103,19 @@ class PlayerCubit extends Cubit<PlayingState>{
     bool isLocal = false;
     String path = "";
     bool fileDownloaded = await getTelawaDownloadStatus(reader!.id, soraNum);
-    if (fileDownloaded)   {
-      isLocal = true;
-      path = await getDownloadedSoraPath(reader!.id, soraNum);
-    }
-    else {
-      path =  getLinkReaderSora(reader!.id,reader!.soraUrl, soraNum);
-    }
-    bool hasNetwork = await InternetConnectionChecker().hasConnection;
-    if(!isLocal&&!hasNetwork) {
-      Constants.showToast(context.loc()?.no_internet_message??"");
-    } else {
-      initalizeMediaAndStart(context:context,path: path, isLocal: isLocal, soundClips: soundClips);
-    }
+    // if (fileDownloaded)   {
+    //   isLocal = true;
+    //   path = await getDownloadedSoraPath(reader!.id, soraNum);
+    // }
+    // else {
+    //   path =  getLinkReaderSora(reader!.id,reader!.soraUrl, soraNum);
+    // }
+    // bool hasNetwork = await InternetConnectionChecker().hasConnection;
+    // if(!isLocal&&!hasNetwork) {
+    //   Constants.showToast(context.loc()?.no_internet_message??"");
+    // } else {
+    //   initalizeMediaAndStart(context:context,path: path, isLocal: isLocal, soundClips: soundClips);
+    // }
   }
 
   ValueNotifier<ButtonState> getButtonNotifier(){
