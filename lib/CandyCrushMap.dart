@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mohafez/features/quran_show/presentation/pages/QuranPageViewer.dart';
 import 'package:mohafez/utils/Constants.dart';
 
 class CandyCrushMap extends StatefulWidget {
@@ -77,7 +78,7 @@ class LevelNode extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("Tapped $title");
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> QuranPageViewer()));
       },
       child:
           Stack(

@@ -1,3 +1,4 @@
+import 'package:mohafez/core/entity/quran/Quran.dart';
 import 'package:mohafez/utils/Constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/cache/DataPreference.dart';
@@ -29,5 +30,10 @@ class PageInfoRepoImpl extends PageInfoRepo{
   @override
   void savePage(int page) {
     DataPreference.getPreference()?.setInt(Constants.LastPage, page);
+  }
+
+  @override
+  Future<Quran?> getAyaOf(int ayaNum, int soraNum) {
+     return quranPagesInfoSource.getAyaOf(ayaNum, soraNum);
   }
 }

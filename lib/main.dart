@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mohafez/core/databases/DatabaseCopy.dart';
 import 'CandyCrushMap.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
+  DatabaseCopy().copyDBs();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeRight,
     DeviceOrientation.landscapeLeft,

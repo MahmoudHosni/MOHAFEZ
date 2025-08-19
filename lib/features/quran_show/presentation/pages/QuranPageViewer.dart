@@ -1,27 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mohafez/core/entity/quran/Sora.dart';
 import 'package:mohafez/core/theme/dark_mode/themes/custom_themedata_ext.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-import '../../../../core/entity/quran/Quran.dart';
-import '../../../../core/extensions/extensions.dart';
 import '../cubit/QuranPageCubit.dart';
 import 'QuranPageView.dart';
 
 class QuranPageViewer extends StatefulWidget {
-  Quran? aya;
+  Sora? sora;
 
-  QuranPageViewer({super.key, this.aya});
+  QuranPageViewer({super.key, this.sora});
 
   @override
   State<QuranPageViewer> createState() => QuranPageViewerState();
 }
 
 class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObserver {
-  // Constants
-  static const int _totalPagesPhone = 604;
-  static const int _totalPagesTabletLandscape = 302;
   late QuranPageCubit quranPageCubit;
   late PageController pageController;
 
@@ -40,12 +36,6 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
 
   void _configureSystemSettings() {
     WakelockPlus.enable();
-  }
-
-  void _onNavigationVisibilityChanged() {
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   @override
@@ -138,13 +128,13 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
     );
   }
 
-  Widget _buildPageItem(int position, Orientation orientation) {
+  _buildPageItem(int position, Orientation orientation) async{
+   var aya = await quranPageCubit.getAyaInSora(widget.sora!.Id,position);
     return QuranPageView(
-      pageNo: position + 1,
       quranPageCubit: quranPageCubit,
       orientation: orientation,
       controller: pageController,
-      aya: widget.aya,
+      aya: aya,
     );
   }
 
@@ -160,44 +150,16 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
   }
 
   int _getItemCount(Orientation orientation) {
-    if (context.isPhone()) return _totalPagesPhone;
-    if (context.isTablet() && orientation == Orientation.portrait) return _totalPagesPhone;
-    return _totalPagesTabletLandscape;
-  }
-
-  void onSelectReadKhatma(int page, int ayaNo, int soraNo) {
-    if (!mounted) return;
-    
-    setState(() {
-      widget.aya = Quran(0, page, "", "", ayaNo, 0, "", 0, "", "", soraNo, "");
-    });
-    
-    final targetPage = page - 1;
-    if (targetPage >= 0 && targetPage < _getItemCount(MediaQuery.of(context).orientation)) {
-      pageController.jumpToPage(targetPage);
-    }
+    return widget.sora?.AyatCount ??3;
   }
 
   void _initializePageController() {
-    final initialPage = _calculateInitialPage();
+    final initialPage = 0;
     
     pageController = PageController(
       initialPage: initialPage,
       keepPage: true,
       viewportFraction: 1.0,
     );
-  }
-
-  int _calculateInitialPage() {
-    int page = widget.aya?.PageNum != null 
-        ? (widget.aya!.PageNum - 1) 
-        : quranPageCubit.getLatestPage();
-    
-    // Adjust for tablet landscape mode
-    if (context.getDeviceType() == DeviceType.Tablet) {
-      page = (page / 2).floor();
-    }
-    
-    return page.clamp(0, _totalPagesPhone - 1);
   }
 }

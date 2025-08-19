@@ -1,3 +1,4 @@
+import '../../../../core/entity/quran/Quran.dart';
 import '../../../../core/entity/quran/QuranPagesInfo.dart';
 
 abstract class PageInfoRepo{
@@ -5,4 +6,5 @@ abstract class PageInfoRepo{
   bool isPagesRight();
   void savePage(int page);
   int getLastPageOpened();
+  Future<Quran?> getAyaOf(int ayaNum,int soraNum);
 }
