@@ -91,6 +91,8 @@ flutter:
   assets:
      - assets/images/
      - assets/lines/
+     - assets/drawables/
+     - assets/db/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

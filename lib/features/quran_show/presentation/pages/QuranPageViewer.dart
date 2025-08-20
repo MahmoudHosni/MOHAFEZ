@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mohafez/core/entity/quran/Sora.dart';
 import 'package:mohafez/core/theme/dark_mode/themes/custom_themedata_ext.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import '../cubit/QuranPageCubit.dart';
 import 'QuranPageView.dart';
@@ -99,17 +98,6 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
   void _handleOrientationChange(Orientation orientation) {
     _resetPageViewDimensions();
     _configureSystemUI();
-    
-    if (context.isTablet()) {
-      _setTabletOrientation();
-    }
-  }
-
-  void _setTabletOrientation() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
   }
 
   Widget _buildPageView(Orientation orientation) {
@@ -117,7 +105,7 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
       scrollDirection: Axis.horizontal,
       physics: const PageScrollPhysics(),
       itemBuilder: (context, position) => _buildPageItem(position, orientation),
-      onPageChanged: (pos) => _handlePageChanged(pos, orientation),
+      onPageChanged: (pos) => {},
       itemCount: _getItemCount(orientation),
       pageSnapping: true,
       padEnds: false,
@@ -136,17 +124,6 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
       controller: pageController,
       aya: aya,
     );
-  }
-
-  void _handlePageChanged(int pos, Orientation orientation) {
-    _saveCurrentPage(pos, orientation);
-  }
-
-  void _saveCurrentPage(int pos, Orientation orientation) {
-    final pageToSave = (orientation == Orientation.landscape && context.isTablet())
-        ? (pos * 2) + 1 
-        : pos;
-    quranPageCubit.savePage(pageToSave);
   }
 
   int _getItemCount(Orientation orientation) {
