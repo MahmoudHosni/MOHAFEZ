@@ -7,4 +7,5 @@ abstract class PageInfoRepo{
   void savePage(int page);
   int getLastPageOpened();
   Future<Quran?> getAyaOf(int ayaNum,int soraNum);
+  Future<List<Quran?>> getAyatOfSora(int soraNum,int start,int end);
 }

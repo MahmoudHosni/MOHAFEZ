@@ -4,7 +4,7 @@ import '../../../../core/entity/aya_position/AyaNumPosition.dart';
 import '../../../../core/entity/quran/Quran.dart';
 import '../../../../core/entity/quran/QuranPagesInfo.dart';
 import '../../../fahres/domain/use_cases/GetFirstAyaInPageUsecase.dart';
-import '../../domain/use_case/GetAyaBySora.dart';
+import '../../domain/use_case/GetAyatOfSora.dart';
 import '../../domain/use_case/GetAyatPositionsInPage.dart';
 import '../../../../features/quran_show/domain/use_case/GetAyatPositionsInRange.dart';
 import '../../../../features/quran_show/presentation/cubit/QuranState.dart';
@@ -30,7 +30,7 @@ class QuranPageCubit extends Cubit<QuranState>{
 
   double pageViewWidth = 0;
   double pageViewHeight = 0;
-  final GetAyaBySora getAyaBySora;
+  final GetAyatOfSora getAyatOfSora;
   final GetAyatPositionsInPage ayatPositionUsecase;
   final GetAyatPositionsInRange ayatPositionsInRange;
   final GetPageInfo pageInfo;
@@ -40,7 +40,7 @@ class QuranPageCubit extends Cubit<QuranState>{
   final GetFirstAyaInPageUsecase getFirstAyaInPageUsecase;
 
   QuranPageCubit({required this.ayatPositionUsecase,required this.ayatPositionsInRange ,required this.pageInfo,required this.isPagesRight,
-    required this.savePageUsecase,required this.getLastPageOpenedUsecase,required this.getFirstAyaInPageUsecase,required this.getAyaBySora}) : super(QuranInitial());
+    required this.savePageUsecase,required this.getLastPageOpenedUsecase,required this.getFirstAyaInPageUsecase,required this.getAyatOfSora}) : super(QuranInitial());
 
   static QuranPageCubit get(context)=>BlocProvider.of(context);
 
@@ -72,7 +72,7 @@ class QuranPageCubit extends Cubit<QuranState>{
     return getFirstAyaInPageUsecase.call(page);
   }
 
-  Future<Quran?> getAyaInSora(int soraId, int ayaID) {
-    return getAyaBySora.call(soraId, ayaID);
+  Future<List<Quran?>> getAyaInSora(int soraId, int start,int end) {
+    return getAyatOfSora.call(soraId, start,end);
   }
 }

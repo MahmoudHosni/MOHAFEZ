@@ -88,6 +88,4 @@ class PlayerDataSourceImpl extends PlayerDataSource{
   Future<bool> saveRepeatedRangeCount(int rpRange) {
     return repeatDataSource.saveRepeatedRangeCount(rpRange);
   }
-
-
 }

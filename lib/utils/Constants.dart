@@ -1,5 +1,7 @@
 
 class Constants{
+  static const String QuranDB = "db/quran_data1.db";
+  static const String RectanglesDB = "db/rectangles1New.db";
   static const String assetsFolder = "assets";
   static const String AyaBookmark = "AyaBookmark";
   static const String assetsImagesFolder = "$assetsFolder/drawables/";
@@ -13,7 +15,6 @@ class Constants{
   static const String arabicCode = "ar";
   static const String englishCode = "en";
   static const String MoyserDB = "MoyserDB";
-  static const String QuranDB = "QuranDB";
   static const String SelectedReaderKey = "SelectedReaderKey";
   static const String RepeatedAyaKey = "RepeatedAyaKey";
   static const String RepeatedRangeKey = "RepeatedRangeKey";

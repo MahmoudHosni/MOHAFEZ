@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
                         isPagesRight: si.di(),
                         getLastPageOpenedUsecase: si.di(),
                         savePageUsecase: si.di(),
-                        getFirstAyaInPageUsecase: si.di(), getAyaBySora: si.di(),)),
+                        getFirstAyaInPageUsecase: si.di(), getAyatOfSora: si.di(),)),
                 BlocProvider(
                   create: (BuildContext context) => AyatHighlightCubit(
                         rectsFromTouchEvent: si.di(), playingAyaRectangles: si.di())),

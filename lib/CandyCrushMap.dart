@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mohafez/core/entity/quran/Sora.dart';
+import 'package:mohafez/features/quran_show/presentation/cubit/AyatHighlightCubit.dart';
 import 'package:mohafez/features/quran_show/presentation/cubit/QuranPageCubit.dart';
 import 'package:mohafez/features/quran_show/presentation/pages/QuranPageViewer.dart';
 import 'package:mohafez/utils/Constants.dart';
@@ -82,14 +83,18 @@ class LevelNode extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        var quranCubit =  QuranPageCubit(ayatPositionUsecase: si.di(),
+          ayatPositionsInRange: si.di(),
+          pageInfo: si.di(),
+          isPagesRight: si.di(),
+          getLastPageOpenedUsecase: si.di(),
+          savePageUsecase: si.di(),getFirstAyaInPageUsecase: si.di(), getAyatOfSora: si.di(),);
         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-              BlocProvider(create: (context) => QuranPageCubit(ayatPositionUsecase: si.di(),
-                                                      ayatPositionsInRange: si.di(),
-                                                      pageInfo: si.di(),
-                                                      isPagesRight: si.di(),
-                                                      getLastPageOpenedUsecase: si.di(),
-                                                      savePageUsecase: si.di(),getFirstAyaInPageUsecase: si.di(), getAyaBySora: si.di(),),
-                            child:QuranPageViewer(sora: Sora(1,"الفاتحة",  7, 1, 1, "الفاتحة", "الفاتحة", "الفاتحة", 1, 7),))
+              MultiBlocProvider(providers: [
+                  BlocProvider(create: (context) => quranCubit,),
+                  BlocProvider(create: (context) => AyatHighlightCubit(rectsFromTouchEvent: si.di(), playingAyaRectangles: si.di()))
+              ], child: QuranPageViewer(sora: Sora(1,"الفاتحة",  7, 1, 1, "الفاتحة", "الفاتحة", "الفاتحة", 1, 7),)
+              )
             ));
       },
       child:

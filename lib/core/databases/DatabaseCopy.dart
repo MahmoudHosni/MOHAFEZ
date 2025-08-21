@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:mohafez/utils/Constants.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseCopy {
   Future<Database> copyDBs() async{
     Future<Database> result;
-    result=getDB('db/quran_data1.db');
-    result=getDB('db/rectangles1New.db');
+    result=getDB(Constants.QuranDB);
+    result=getDB(Constants.RectanglesDB);
     return result;
   }
 

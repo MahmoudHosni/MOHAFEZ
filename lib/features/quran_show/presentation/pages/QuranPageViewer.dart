@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mohafez/core/entity/quran/Quran.dart';
 import 'package:mohafez/core/entity/quran/Sora.dart';
 import 'package:mohafez/core/theme/dark_mode/themes/custom_themedata_ext.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -19,6 +20,7 @@ class QuranPageViewer extends StatefulWidget {
 class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObserver {
   late QuranPageCubit quranPageCubit;
   late PageController pageController;
+  late List<Quran?> ayat;
 
   @override
   void initState() {
@@ -74,39 +76,29 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        _buildMainContainer(),
-      ],
-    );
-  }
-
-  Widget _buildMainContainer() {
     return Container(
       margin: EdgeInsets.zero,
-      color: Theme.of(context).MoshafBG2,
-      child: OrientationBuilder(
-        builder: (context, orientation) {
-          _handleOrientationChange(orientation);
-          return _buildPageView(orientation);
-        },
-      ),
+      color: Colors.yellow,
+      child: FutureBuilder(
+        future: quranPageCubit.getAyaInSora(1, 1, 7),
+        builder: (context,snapshot){
+          if(snapshot.hasData) {
+            ayat = snapshot.data ?? [];
+            return _buildPageView();
+          }else{
+            return SizedBox();
+          }
+      }),
     );
   }
 
-  void _handleOrientationChange(Orientation orientation) {
-    _resetPageViewDimensions();
-    _configureSystemUI();
-  }
-
-  Widget _buildPageView(Orientation orientation) {
+  Widget _buildPageView() {
     return PageView.builder(
       scrollDirection: Axis.horizontal,
       physics: const PageScrollPhysics(),
-      itemBuilder: (context, position) => _buildPageItem(position, orientation),
+      itemBuilder: (context, position) => _buildPageItem(position,),
       onPageChanged: (pos) => {},
-      itemCount: _getItemCount(orientation),
+      itemCount: _getItemCount(),
       pageSnapping: true,
       padEnds: false,
       reverse: quranPageCubit.isRightToLeft(),
@@ -116,17 +108,15 @@ class QuranPageViewerState extends State<QuranPageViewer> with WidgetsBindingObs
     );
   }
 
-  _buildPageItem(int position, Orientation orientation) async{
-   var aya = await quranPageCubit.getAyaInSora(widget.sora!.Id,position);
+  Widget _buildPageItem(int position,) {
     return QuranPageView(
       quranPageCubit: quranPageCubit,
-      orientation: orientation,
       controller: pageController,
-      aya: aya,
+      aya: ayat.length>0? ayat[position]:null,
     );
   }
 
-  int _getItemCount(Orientation orientation) {
+  int _getItemCount() {
     return widget.sora?.AyatCount ??3;
   }
 

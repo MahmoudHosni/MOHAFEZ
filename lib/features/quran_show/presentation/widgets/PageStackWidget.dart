@@ -11,18 +11,16 @@ import '../cubit/QuranPageCubit.dart';
 
 class PageStackWidget extends StatefulWidget {
   final QuranPageCubit quranPageCubit;
-  final Orientation orientation;
   final PageController? controller;
   Quran? aya;
 
-  PageStackWidget({Key? key,required this.quranPageCubit,required this.orientation,required this.controller,this.aya }): super(key: key);
+  PageStackWidget({Key? key,required this.quranPageCubit,required this.controller,this.aya }): super(key: key);
 
   @override
   State<PageStackWidget> createState() => _PageStackWidgetState();
 }
 
 class _PageStackWidgetState extends State<PageStackWidget> {
-  bool darkMode = false;
   late AyatHighlightCubit ayatHighlightCubit;
   List<ExportLine> highlightedAyaLines = [];
 
@@ -35,7 +33,6 @@ class _PageStackWidgetState extends State<PageStackWidget> {
 
   @override
   Widget build(BuildContext context) {
-    darkMode = context.isNightMode();
     final double lineHeight = ((MediaQuery.of(context).size.width * 150) / Constants.PageWidth);
 
     return BlocBuilder<AyatHighlightCubit, HighlightState>(
@@ -102,12 +99,12 @@ class _PageStackWidgetState extends State<PageStackWidget> {
   }
   
   void _handleVerticalDrag(DragUpdateDetails details) {
-    const int sensitivity = 8;
-    if (details.delta.dy > sensitivity) {
-      ThemeCubit.get(context).changeAppThemeNIGHT();
-    } else if (details.delta.dy < -sensitivity) {
-      ThemeCubit.get(context).changeAppThemeLIGHT();
-    }
+    // const int sensitivity = 8;
+    // if (details.delta.dy > sensitivity) {
+    //   ThemeCubit.get(context).changeAppThemeNIGHT();
+    // } else if (details.delta.dy < -sensitivity) {
+    //   ThemeCubit.get(context).changeAppThemeLIGHT();
+    // }
   }
 
   Widget getAyaLine(int pageNo, int line) {

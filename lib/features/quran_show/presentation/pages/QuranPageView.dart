@@ -7,14 +7,12 @@ import '../widgets/PageStackWidget.dart';
 
 class QuranPageView extends StatefulWidget {
   final QuranPageCubit quranPageCubit;
-  final Orientation orientation;
   final PageController controller;
   final Quran? aya;
 
   const QuranPageView({
     super.key,
     required this.quranPageCubit,
-    required this.orientation,
     required this.controller,
     this.aya,
   });
@@ -44,7 +42,7 @@ class _QuranPageViewState extends State<QuranPageView> {
     _initializeCachedValues();
     
     return LayoutBuilder(
-      key: ValueKey('${widget.aya?.ID}_${widget.orientation}'),
+      key: ValueKey('${widget.aya?.ID}'),
       builder: (context, constraints) {
         _initializeScaleIfNeeded(constraints);
         return _buildContent(constraints);
@@ -60,7 +58,6 @@ class _QuranPageViewState extends State<QuranPageView> {
     return PageStackWidget(
       key: ValueKey(widget.aya?.ID ??0),
       quranPageCubit: widget.quranPageCubit,
-      orientation: widget.orientation,
       controller: widget.controller,
       aya: widget.aya,
     );

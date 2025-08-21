@@ -21,9 +21,12 @@ import '../../features/quran_show/data/data_sources/QuranPagesInfoSource.dart';
 import '../../features/quran_show/data/data_sources/RectanglesDataSource.dart';
 import '../../features/quran_show/data/repository/AyatPositionRepoImpl.dart';
 import '../../features/quran_show/data/repository/PageInfoRepoImpl.dart';
+import '../../features/quran_show/data/repository/RectanglesRepoImpl.dart';
 import '../../features/quran_show/domain/repo/AyatPositionRepo.dart';
 import '../../features/quran_show/domain/repo/PageInfoRepo.dart';
+import '../../features/quran_show/domain/repo/RectanglesRepo.dart';
 import '../../features/quran_show/domain/use_case/GetAyaBySora.dart';
+import '../../features/quran_show/domain/use_case/GetAyatOfSora.dart';
 import '../../features/quran_show/domain/use_case/GetAyatPositionsInPage.dart';
 import '../../features/quran_show/domain/use_case/GetAyatPositionsInRange.dart';
 import '../../features/quran_show/domain/use_case/GetLastPageOpenedUsecase.dart';
@@ -45,7 +48,7 @@ Future<void> init() async {
       pageInfo: di(),
       isPagesRight: di(),
       getLastPageOpenedUsecase: di(),
-      savePageUsecase: di(),getFirstAyaInPageUsecase: di(), getAyaBySora: di()));
+      savePageUsecase: di(),getFirstAyaInPageUsecase: di(), getAyatOfSora: di()));
   di.registerLazySingleton<AyatHighlightCubit>(() => AyatHighlightCubit(
       rectsFromTouchEvent: di(), playingAyaRectangles: di()));
   di.registerLazySingleton<PlayerCubit>(() => PlayerCubit(
@@ -64,6 +67,8 @@ Future<void> init() async {
   di.registerLazySingleton<FahresRepository>(() => FahresRepositoryImpl(dataSource: di()));
   di.registerLazySingleton<PageInfoRepo>(() => PageInfoRepoImpl(quranPagesInfoSource: di(), preference: di()));
   di.registerLazySingleton<AyatPositionRepo>(() => AyatPositionRepoImpl(ayatPositionDataSource: di()));
+  di.registerLazySingleton<RectanglesRepo>(() => RectanglesRepoImpl(rectanglesDataSource: di()));
+  di.registerLazySingleton(() => GetAyatOfSora(pageInfoRepo: di())); //
   di.registerLazySingleton(() => GetAyatPositionsInPage(ayatPositionRepo: di()));
   di.registerLazySingleton(() => GetAyatPositionsInRange(ayatPositionRepo: di()));
   di.registerLazySingleton(() => GetRectsOfAya(rectanglesRepo: di()));

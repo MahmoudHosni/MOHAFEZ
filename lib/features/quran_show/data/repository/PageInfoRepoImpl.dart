@@ -36,4 +36,9 @@ class PageInfoRepoImpl extends PageInfoRepo{
   Future<Quran?> getAyaOf(int ayaNum, int soraNum) {
      return quranPagesInfoSource.getAyaOf(ayaNum, soraNum);
   }
+
+  @override
+  Future<List<Quran?>> getAyatOfSora(int soraNum,int start,int end) {
+    return quranPagesInfoSource.getAyatOfSora(start, end, soraNum);
+  }
 }

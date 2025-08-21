@@ -1,3 +1,4 @@
+import '../../../utils/Constants.dart';
 import 'AppDatabase.dart';
 
 class QuranFloorDB{
@@ -10,12 +11,12 @@ class QuranFloorDB{
     if(_database != null) {
       return _database!;
     }
-    _database = await $FloorAppDatabase.databaseBuilder('quran_data1.db').build() ;
+    _database = await $FloorAppDatabase.databaseBuilder(Constants.QuranDB).build() ;
     return _database!;
   }
 
   Future<AppDatabase> init() async{
-    return await $FloorAppDatabase.databaseBuilder('quran_data1.db').build() ;
+    return await $FloorAppDatabase.databaseBuilder(Constants.QuranDB).build() ;
   }
 
 }
