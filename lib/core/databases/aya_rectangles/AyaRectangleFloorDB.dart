@@ -1,3 +1,5 @@
+import 'package:mohafez/utils/Constants.dart';
+
 import 'AyaRectanglesDB.dart';
 
 class AyaRectangleFloorDB{
@@ -9,11 +11,11 @@ class AyaRectangleFloorDB{
   Future<AyaRectanglesDB> get database async {
     if(_database != null)
       return _database!;
-    _database = await $FloorAyaRectanglesDB.databaseBuilder('rectangles1New.db').build() ;
+    _database = await $FloorAyaRectanglesDB.databaseBuilder(Constants.RectanglesDB).build() ;
     return _database!;
   }
 
   Future<AyaRectanglesDB> init() async{
-    return await $FloorAyaRectanglesDB.databaseBuilder('rectangles1New.db').build() ;
+    return await $FloorAyaRectanglesDB.databaseBuilder(Constants.RectanglesDB).build() ;
   }
 }

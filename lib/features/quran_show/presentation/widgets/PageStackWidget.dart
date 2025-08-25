@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mohafez/core/extensions/extensions.dart';
 import '../../../../core/entity/aya_rect/ExportLine.dart';
 import '../../../../core/entity/quran/Quran.dart';
-import '../../../../core/theme/dark_mode/cubit/theme_cubit.dart';
 import '../../../../utils/Constants.dart';
 import '../../domain/quran_util/QuranUtils.dart';
 import '../cubit/AyatHighlightCubit.dart';
@@ -60,7 +59,6 @@ class _PageStackWidgetState extends State<PageStackWidget> {
     final isPortrait = context.getOrentation() == Orientation.portrait;
     
     return GestureDetector(
-      onVerticalDragUpdate: isPortrait ? _handleVerticalDrag : null,
       onLongPressStart: (pos) => {},
       onTapUp: (_) => {},
       child: FittedBox(
@@ -94,27 +92,17 @@ class _PageStackWidgetState extends State<PageStackWidget> {
   }
   
   Widget _buildAyaLineWithFilter(int pageNo, int line) {
-    final ayaLine = getAyaLine(pageNo, line);
-    return ayaLine;
-  }
-  
-  void _handleVerticalDrag(DragUpdateDetails details) {
-    // const int sensitivity = 8;
-    // if (details.delta.dy > sensitivity) {
-    //   ThemeCubit.get(context).changeAppThemeNIGHT();
-    // } else if (details.delta.dy < -sensitivity) {
-    //   ThemeCubit.get(context).changeAppThemeLIGHT();
-    // }
+    return getAyaLine(pageNo, line);
   }
 
   Widget getAyaLine(int pageNo, int line) {
     return SizedBox(
-      width:  MediaQuery.of(context).size.width,
+      width:  MediaQuery.of(context).size.width-500,
       child: Image.asset(
         "${Constants.assetsQuranPagesFolder}$pageNo.$line.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         alignment: Alignment.center,
-        width:  MediaQuery.of(context).size.width,
+        width:  MediaQuery.of(context).size.width-500,
       ),
     );
   }

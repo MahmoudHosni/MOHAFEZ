@@ -90,10 +90,10 @@ class LevelNode extends StatelessWidget {
           getLastPageOpenedUsecase: si.di(),
           savePageUsecase: si.di(),getFirstAyaInPageUsecase: si.di(), getAyatOfSora: si.di(),);
         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-              MultiBlocProvider(providers: [
-                  BlocProvider(create: (context) => quranCubit,),
-                  BlocProvider(create: (context) => AyatHighlightCubit(rectsFromTouchEvent: si.di(), playingAyaRectangles: si.di()))
-              ], child: QuranPageViewer(sora: Sora(1,"الفاتحة",  7, 1, 1, "الفاتحة", "الفاتحة", "الفاتحة", 1, 7),)
+                MultiBlocProvider(providers: [
+                    BlocProvider(create: (context) => quranCubit,),
+                    BlocProvider(create: (context) => AyatHighlightCubit(rectsFromTouchEvent: si.di(), playingAyaRectangles: si.di()))
+                ], child: QuranPageViewer(sora: Sora(1,"الفاتحة",  7, 1, 1, "الفاتحة", "الفاتحة", "الفاتحة", 1, 7),)
               )
             ));
       },

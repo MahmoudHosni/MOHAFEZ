@@ -37,7 +37,7 @@ class QuranUtils{
                   left: rect.left,
                   top: rect.top,
                   child: Container(
-                    color: context.isNightMode()?  ColorManager.HighlightNightAyatColor.withAlpha(130) : ColorManager.HighlightAyatColor.withAlpha(120),
+                    color: ColorManager.HighlightAyatColor.withAlpha(120),
                     width: rect.width.isNaN? 0: rect.width.abs(),
                     height: rect.height.isNaN? 0: rect.height.abs(),
                   ));

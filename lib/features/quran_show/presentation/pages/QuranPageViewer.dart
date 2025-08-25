@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mohafez/core/entity/quran/Quran.dart';
 import 'package:mohafez/core/entity/quran/Sora.dart';
-import 'package:mohafez/core/theme/dark_mode/themes/custom_themedata_ext.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import '../cubit/QuranPageCubit.dart';
 import 'QuranPageView.dart';

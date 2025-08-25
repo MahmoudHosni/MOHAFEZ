@@ -67,7 +67,7 @@ class _QuranPageViewState extends State<QuranPageView> {
     return SingleChildScrollView(
       child: SizedBox(
         height: constraints.maxHeight,
-        width: constraints.maxWidth,
+        width: double.infinity,
         child: _buildSinglePageView(),
       ),
     );
